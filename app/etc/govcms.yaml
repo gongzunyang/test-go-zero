@@ -1,0 +1,13 @@
+Name: govcms
+Host: 0.0.0.0
+Port: 8888
+
+DB:
+  DataSource: root:123456@tcp(192.168.60.40:3306)/php-new-e-nation?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+CacheRedis:
+  - Host: 192.168.29.20:6379
+    Pass: sZzz@!q993&.6
+    Type: node
+Auth:
+  AccessSecret: gzygzygzy
+  AccessExpire: 1800

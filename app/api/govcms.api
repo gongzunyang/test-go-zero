@@ -1,0 +1,118 @@
+syntax = "v1"
+
+info(
+	title: "政务"
+	desc: "政务系统"
+	author: "szzz"
+	email: "xxx@diasia.com"
+	version: "1.0"
+)
+
+import (
+	"publishing/publishing.api"
+)
+
+type UserInfoReq {
+}
+
+type UserInfoResp {
+}
+
+type CategoryReq {
+	Name     string `json:"name"`
+	Status   int    `json:"status"`
+	Page     int64  `json:"page"`
+	PageSize int64  `json:"pagesize"`
+}
+
+type CommonResp {
+	Code int          `json:"code"`
+	Msg  string       `json:"msg"`
+	Data CategoryResp `json:"data"`
+}
+
+type CategoryResp {
+	Id                 int64             `json:"id"`
+	Pid                int64             `json:"pid"`
+	Name               string            `json:"name"`
+	Status             string            `json:"status"`
+	Remark             string            `json:"remark"`
+	Get_second_service []CategoryRespSon `json:"get_second_service"`
+}
+
+type PageResp {
+	Current_page int64          `json:"current_page"`
+	Page_size    int64          `json:"page_size"`
+	Total_page   int64          `json:"total_page"`
+	Total_item   int64          `json:"total_item"`
+	List         []CategoryResp `json:"list"`
+}
+
+type CategoryRespSon {
+	Id     int64  `json:"id"`
+	Pid    int64  `json:"pid"`
+	Name   string `json:"name"`
+	Status string `json:"status"`
+	Remark string `json:"remark"`
+}
+
+type (
+	CommonReponse {
+		Code int8        `json:"code"`
+		Msg  string      `json:"msg"`
+		Data interface{} `json:"data"`
+	}
+)
+
+type (
+	SearchReq {
+		// 图书名称
+		Name string `json:"name"`
+	}
+
+	SearchReply {
+		Name  string `json:"name"`
+		Count int    `json:"count"`
+	}
+)
+
+@server(
+	prefix: v1
+	group: ping
+	jwt: Auth
+)
+
+service govcms {
+	@handler ping
+	post /search/ping (SearchReq) returns (SearchReply)
+}
+
+//no need login
+@server(
+	prefix: v1
+	group: category
+)
+
+service govcms {
+	
+	@doc "服务类目列表"
+	@handler serviceCategoryList
+	post /servicecategory/list (CategoryReq) returns (CommonResp)
+}
+
+//no need login
+@server(
+	prefix: v1
+	group: publishing
+)
+
+service govcms {
+	
+	@doc "服务管理"
+	@handler publishing
+	post /publishing/publishing/list (PublishingListReq) returns (PublishingListResp)
+	
+	@doc "统一返回data"
+	@handler returnDataList
+	post /data/list (SearchReq) returns (CommonReponse)
+}
