@@ -46,7 +46,7 @@ type CategoryRespSon struct {
 }
 
 type CommonReponse struct {
-	Code int8        `json:"code"`
+	Code int64       `json:"code"`
 	Msg  string      `json:"msg"`
 	Data interface{} `json:"data"`
 }

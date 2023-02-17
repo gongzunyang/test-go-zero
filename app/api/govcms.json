@@ -1,0 +1,364 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "政务",
+    "description": "政务系统",
+    "version": "1.0"
+  },
+  "host": "localhost:8888",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/data/list": {
+      "post": {
+        "summary": "统一返回data",
+        "operationId": "returnDataList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonReponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "publishing"
+        ]
+      }
+    },
+    "/v1/publishing/publishing/list": {
+      "post": {
+        "summary": "服务管理",
+        "operationId": "publishing",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SearchReply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PublishingListReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "publishing"
+        ]
+      }
+    },
+    "/v1/search/ping": {
+      "post": {
+        "operationId": "ping",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SearchReply"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "ping"
+        ]
+      }
+    },
+    "/v1/servicecategory/list": {
+      "post": {
+        "summary": "服务类目列表",
+        "operationId": "serviceCategoryList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CommonResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "category"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CategoryReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "CategoryReq",
+      "required": [
+        "name",
+        "status",
+        "page",
+        "pagesize"
+      ]
+    },
+    "CategoryResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pid": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "get_second_service": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CategoryRespSon"
+          }
+        }
+      },
+      "title": "CategoryResp",
+      "required": [
+        "id",
+        "pid",
+        "name",
+        "status",
+        "remark",
+        "get_second_service"
+      ]
+    },
+    "CategoryRespSon": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pid": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        }
+      },
+      "title": "CategoryRespSon",
+      "required": [
+        "id",
+        "pid",
+        "name",
+        "status",
+        "remark"
+      ]
+    },
+    "CommonReponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "title": "CommonReponse",
+      "required": [
+        "code",
+        "msg",
+        "data"
+      ]
+    },
+    "CommonResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/CategoryResp"
+        }
+      },
+      "title": "CommonResp",
+      "required": [
+        "code",
+        "msg",
+        "data"
+      ]
+    },
+    "PageResp": {
+      "type": "object",
+      "properties": {
+        "current_page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "page_size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "total_page": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "total_item": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CategoryResp"
+          }
+        }
+      },
+      "title": "PageResp",
+      "required": [
+        "current_page",
+        "page_size",
+        "total_page",
+        "total_item",
+        "list"
+      ]
+    },
+    "PublishingListReq": {
+      "type": "object",
+      "title": "PublishingListReq"
+    },
+    "PublishingListResp": {
+      "type": "object",
+      "title": "PublishingListResp"
+    },
+    "SearchReply": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "SearchReply",
+      "required": [
+        "name",
+        "count"
+      ]
+    },
+    "SearchReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "SearchReq",
+      "required": [
+        "name"
+      ]
+    },
+    "UserInfoReq": {
+      "type": "object",
+      "title": "UserInfoReq"
+    },
+    "UserInfoResp": {
+      "type": "object",
+      "title": "UserInfoResp"
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

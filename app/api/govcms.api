@@ -58,7 +58,7 @@ type CategoryRespSon {
 
 type (
 	CommonReponse {
-		Code int8        `json:"code"`
+		Code int64       `json:"code"`
 		Msg  string      `json:"msg"`
 		Data interface{} `json:"data"`
 	}
@@ -77,7 +77,7 @@ type (
 )
 
 @server(
-	prefix: v1
+	prefix: /v1
 	group: ping
 	jwt: Auth
 )
@@ -89,7 +89,7 @@ service govcms {
 
 //no need login
 @server(
-	prefix: v1
+	prefix: /v1
 	group: category
 )
 
@@ -102,7 +102,7 @@ service govcms {
 
 //no need login
 @server(
-	prefix: v1
+	prefix: /v1
 	group: publishing
 )
 
@@ -110,7 +110,7 @@ service govcms {
 	
 	@doc "服务管理"
 	@handler publishing
-	post /publishing/publishing/list (PublishingListReq) returns (PublishingListResp)
+	post /publishing/publishing/list (PublishingListReq) returns (SearchReply)
 	
 	@doc "统一返回data"
 	@handler returnDataList

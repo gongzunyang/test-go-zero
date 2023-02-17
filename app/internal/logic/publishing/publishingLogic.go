@@ -23,8 +23,9 @@ func NewPublishingLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Publis
 	}
 }
 
-func (l *PublishingLogic) Publishing(req *types.PublishingListReq) (resp *types.PublishingListResp, err error) {
+func (l *PublishingLogic) Publishing(req *types.PublishingListReq) (resp types.SearchReply, err error) {
 	// todo: add your logic here and delete this line
-
-	return
+	resp.Name = "gzygzy"
+	resp.Count = 1234
+	return resp, nil
 }
